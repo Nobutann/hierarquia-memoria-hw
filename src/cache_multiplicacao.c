@@ -1,20 +1,8 @@
-#define _POSIX_C_SOURCE 199309L
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-
-#ifndef OPT_LEVEL
-#define OPT_LEVEL "unknown"
-#endif
+#include <string.h>
 
 volatile double sink = 0.0;
-
-double now_seconds() {
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    return ts.tv_sec + ts.tv_nsec / 1e9;
-}
 
 int min_int(int a, int b) {
     return a < b ? a : b;
@@ -90,57 +78,44 @@ void multiplicar_blocos(double *a, double *b, double *c, int n, int bloco) {
     }
 }
 
-void executar_teste(int n, int repeticoes, int bloco) {
+int main(int argc, char *argv[]) {
+    if (argc != 4) {
+        fprintf(stderr, "Uso: %s <tamanho> <normal|blocos> <bloco>\n", argv[0]);
+        return 1;
+    }
+
+    int n = atoi(argv[1]);
+    char *modo = argv[2];
+    int bloco = atoi(argv[3]);
+
     double *a = criar_matriz(n);
     double *b = criar_matriz(n);
     double *c = criar_matriz(n);
 
     inicializar_matriz(a, n);
     inicializar_matriz(b, n);
+    zerar_matriz(c, n);
 
-    for (int r = 1; r <= repeticoes; r++) {
-        zerar_matriz(c, n);
-
-        double inicio = now_seconds();
+    if (strcmp(modo, "normal") == 0) {
         multiplicar_normal(a, b, c, n);
-        double fim = now_seconds();
-
-        double soma_normal = checksum(c, n);
-        sink = soma_normal;
-
-        printf("multiplicacao,%d,%s,normal,0,%d,%.6f,%.2f\n",
-               n, OPT_LEVEL, r, (fim - inicio) * 1000.0, soma_normal);
-
-        zerar_matriz(c, n);
-
-        inicio = now_seconds();
+    } else if (strcmp(modo, "blocos") == 0) {
         multiplicar_blocos(a, b, c, n, bloco);
-        fim = now_seconds();
-
-        double soma_blocos = checksum(c, n);
-        sink = soma_blocos;
-
-        printf("multiplicacao,%d,%s,blocos,%d,%d,%.6f,%.2f\n",
-               n, OPT_LEVEL, bloco, r, (fim - inicio) * 1000.0, soma_blocos);
+    } else {
+        fprintf(stderr, "Modo invalido. Use normal ou blocos.\n");
+        free(a);
+        free(b);
+        free(c);
+        return 1;
     }
+
+    double soma = checksum(c, n);
+    sink = soma;
+
+    printf("tamanho=%d modo=%s bloco=%d checksum=%.2f\n", n, modo, bloco, soma);
 
     free(a);
     free(b);
     free(c);
-}
-
-int main() {
-    int tamanhos[] = {128, 256, 512};
-    int quantidade_tamanhos = sizeof(tamanhos) / sizeof(tamanhos[0]);
-
-    int repeticoes = 10;
-    int bloco = 32;
-
-    printf("experimento,tamanho,otimizacao,algoritmo,bloco,repeticao,tempo_ms,checksum\n");
-
-    for (int i = 0; i < quantidade_tamanhos; i++) {
-        executar_teste(tamanhos[i], repeticoes, bloco);
-    }
 
     return 0;
 }

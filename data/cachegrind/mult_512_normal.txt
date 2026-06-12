@@ -1,0 +1,25 @@
+==41008== Cachegrind, a high-precision tracing profiler
+==41008== Copyright (C) 2002-2024, and GNU GPL'd, by Nicholas Nethercote et al.
+==41008== Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
+==41008== Command: ./cache_multiplicacao_O2 512 normal 32
+==41008== 
+--41008-- warning: L3 cache found, using its data for the LL simulation.
+--41008-- warning: specified LL cache: line_size 64  assoc 8  total_size 12,582,912
+--41008-- warning: simulated LL cache: line_size 64  assoc 12  total_size 12,582,912
+tamanho=512 modo=normal bloco=32 checksum=342226199104.00
+==41008== 
+==41008== I refs:        948,706,869
+==41008== I1  misses:          1,462
+==41008== LLi misses:          1,428
+==41008== I1  miss rate:        0.00%
+==41008== LLi miss rate:        0.00%
+==41008== 
+==41008== D refs:        269,334,520  (268,731,578 rd   + 602,942 wr)
+==41008== D1  misses:    134,942,113  (134,581,201 rd   + 360,912 wr)
+==41008== LLd misses:         99,755  (      1,098 rd   +  98,657 wr)
+==41008== D1  miss rate:        50.1% (       50.1%     +    59.9%  )
+==41008== LLd miss rate:         0.0% (        0.0%     +    16.4%  )
+==41008== 
+==41008== LL refs:       134,943,575  (134,582,663 rd   + 360,912 wr)
+==41008== LL misses:         101,183  (      2,526 rd   +  98,657 wr)
+==41008== LL miss rate:          0.0% (        0.0%     +    16.4%  )
