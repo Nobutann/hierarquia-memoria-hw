@@ -1,0 +1,46 @@
+\begin{table}[ht]
+\centering
+\caption{Razão entre o tempo médio do acesso por coluna e por linha.}
+\label{tab:razao-coluna-linha}
+\begin{tabular}{rrrr}
+\hline
+Tamanho & \texttt{-O0} & \texttt{-O2} & \texttt{-O3} \\
+\hline
+512x512 & 1,17x & 4,80x & 5,13x \\
+1024x1024 & 2,84x & 6,17x & 5,61x \\
+2048x2048 & 3,80x & 9,80x & 10,41x \\
+4096x4096 & 6,30x & 17,89x & 17,73x \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Speedup da multiplicação com blocagem em relação à multiplicação tradicional.}
+\label{tab:speedup-blocagem}
+\begin{tabular}{rrrr}
+\hline
+Tamanho & \texttt{-O0} & \texttt{-O2} & \texttt{-O3} \\
+\hline
+128x128 & 1,05x & 1,62x & 3,49x \\
+256x256 & 1,01x & 1,37x & 2,83x \\
+512x512 & 1,32x & 5,40x & 11,20x \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Resultados de Cachegrind para casos representativos.}
+\label{tab:cachegrind}
+\begin{tabular}{lrrr}
+\hline
+Caso & D refs & D1 misses & D1 miss rate \\
+\hline
+Acesso por linha 2048x2048 & 6.337.458 & 1.050.490 & 16,6\% \\
+Acesso por coluna 2048x2048 & 6.337.465 & 4.720.505 & 74,5\% \\
+Multiplicação tradicional 512x512 & 269.334.520 & 134.942.113 & 50,1\% \\
+Multiplicação com blocagem 512x512 & 408.043.318 & 22.423.747 & 5,5\% \\
+\hline
+\end{tabular}
+\end{table}
