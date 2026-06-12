@@ -68,6 +68,7 @@ for opt in sorted(df_filtrado["otimizacao"].unique()):
 
     output_path = PLOTS_DIR / f"grafico_linha_coluna_{opt}.png"
     plt.savefig(output_path, dpi=300)
+    plt.savefig(PLOTS_DIR / f"grafico_linha_coluna_{opt}.pdf")
     plt.close()
 
     print("Gráfico salvo em:", output_path)
