@@ -1,0 +1,30 @@
+\begin{table}[ht]
+\centering
+\caption{Razão entre o tempo médio do acesso por coluna e por linha, apresentada como média $\pm$ desvio padrão.}
+\label{tab:razao-coluna-linha}
+\begin{tabular}{rrrr}
+\toprule
+Tamanho & \texttt{-O0} & \texttt{-O2} & \texttt{-O3} \\
+\midrule
+512x512 & 1,17 $\pm$ 0,07x & 4,81 $\pm$ 0,28x & 5,13 $\pm$ 0,27x \\
+1024x1024 & 2,84 $\pm$ 0,59x & 6,18 $\pm$ 0,54x & 5,64 $\pm$ 0,65x \\
+2048x2048 & 3,80 $\pm$ 0,33x & 9,81 $\pm$ 0,97x & 10,59 $\pm$ 1,68x \\
+4096x4096 & 6,33 $\pm$ 0,44x & 17,90 $\pm$ 0,78x & 17,76 $\pm$ 0,95x \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Speedup da multiplicação com blocagem em relação à multiplicação tradicional, apresentado como média $\pm$ desvio padrão.}
+\label{tab:speedup-blocagem}
+\begin{tabular}{rrrr}
+\toprule
+Tamanho & \texttt{-O0} & \texttt{-O2} & \texttt{-O3} \\
+\midrule
+128x128 & 1,05 $\pm$ 0,01x & 1,62 $\pm$ 0,02x & 3,49 $\pm$ 0,20x \\
+256x256 & 1,01 $\pm$ 0,06x & 1,37 $\pm$ 0,02x & 2,83 $\pm$ 0,05x \\
+512x512 & 1,32 $\pm$ 0,04x & 5,40 $\pm$ 0,06x & 11,20 $\pm$ 0,06x \\
+\bottomrule
+\end{tabular}
+\end{table}
